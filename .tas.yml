@@ -1,0 +1,104 @@
+postMerge :
+  preRun: 
+    command:
+      - pnpm install
+      - cp ./packages/hoppscotch-app/.env.example ./packages/hoppscotch-app/.env
+  
+  subModules:          #Not to be changed
+      
+#       - name: hoppscotch-app      
+#         path : "./packages/hoppscotch-app/"
+#         pattern: 
+#           - "./**/__tests__/**/*.spec.js"
+        
+#         framework : jest
+        
+#         preRun:
+#           command:
+#             - pnpm i
+            
+#         postRun:
+#             command:
+#               - node --version 
+#         configFile : "./jest.config.js"
+      
+        
+      - name: hoppscotch-cli      
+        path : "./packages/hoppscotch-cli/"
+        pattern: 
+          - "./src/__tests__/**/*.spec.ts"
+        
+        framework : jest
+        
+        preRun:
+          command:
+            - pnpm i
+            - npm run prepublish
+            - npm run prettier-format
+            - npm run do-typecheck
+        
+        postRun:
+            command:
+              - node --version 
+        configFile : "./jest.config.ts"
+        
+#       - name: hoppscotch-js-sandbox     
+#         path : "./packages/hoppscotch-js-sandbox/"
+#         pattern: 
+#           - "./src/__tests__/**/*.spec.ts"
+        
+#         framework : jest
+        
+#         preRun:
+#           command:
+#             - pnpm i
+        
+#         postRun:
+#             command:
+#               - node --version 
+#         configFile : "./jest.config.js" 
+        
+        
+        
+preMerge : 
+  
+  subModules:          #Not to be changed
+      - name: hoppscotch-cli      #Can be changed
+        path : "./"
+        pattern: 
+          - "./packages/hoppscotch-cli/src/__tests__/**/*.*.ts"
+        
+        framework : jest
+        postRun:
+            command:
+              - node --version
+        
+      - name: hoppscotch-js-sandbox       
+        path : "./"
+        pattern: 
+          - "./packages/hoppscotch-js-sandbox/src/__tests__/**/*.*.ts"
+        
+        framework : jest
+          
+        postRun:
+            command:
+              - node --version
+        configFile : "./packages/hoppscotch-js-sandbox/jest.config.js"
+        
+      - name: hoppscotch-app      
+        path : "./"
+        pattern: 
+          - "./packages/hoppscotch-app/src/__tests__/**/*.*.ts"
+        
+        framework : jest
+        
+          
+        postRun:
+            command:
+              - node --version
+        configFile : "./packages/hoppscotch-app/jest.config.js"
+        
+  
+parallelism: 2 # this will be depricated in future
+version : 2.0
+nodeVersion: 16.15.0
