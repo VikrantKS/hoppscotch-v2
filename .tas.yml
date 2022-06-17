@@ -1,9 +1,9 @@
 postMerge :
   preRun: 
     command:
+      - cp ./packages/hoppscotch-app/.env.example ./packages/hoppscotch-app/.env
       - pnpm install
       - pnpm install jest-config -w
-      - cp ./packages/hoppscotch-app/.env.example ./packages/hoppscotch-app/.env
   
   subModules:          #Not to be changed
       
